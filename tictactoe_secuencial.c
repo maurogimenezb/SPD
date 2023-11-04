@@ -1,17 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-
 #define BOARD_SIZE 9
 #define EMPTY '-'
 
 char board[BOARD_SIZE];
 char currentPlayer = 'X';
 int gameOver = 0;
-int movesX = 0; // Número de movimientos de X
-int movesO = 0; // Número de movimientos de O
+int movesX = 0; 
+int movesO = 0; 
 
-// Función para imprimir el tablero
 void printBoard() {
     for (int i = 0; i < BOARD_SIZE; i++) {
         printf("%c ", board[i]);
@@ -21,21 +19,17 @@ void printBoard() {
     }
 }
 
-// Función para verificar si hay un ganador
 int checkWinner(char player) {
-    // Verificar filas
     if ((board[0] == player && board[1] == player && board[2] == player) ||
         (board[3] == player && board[4] == player && board[5] == player) ||
         (board[6] == player && board[7] == player && board[8] == player)) {
         return 1;
     }
-    // Verificar columnas
     if ((board[0] == player && board[3] == player && board[6] == player) ||
         (board[1] == player && board[4] == player && board[7] == player) ||
         (board[2] == player && board[5] == player && board[8] == player)) {
         return 1;
     }
-    // Verificar diagonales
     if ((board[0] == player && board[4] == player && board[8] == player) ||
         (board[2] == player && board[4] == player && board[6] == player)) {
         return 1;
@@ -43,15 +37,13 @@ int checkWinner(char player) {
     return 0;
 }
 
-// Función para verificar si hay un empate
 int checkTie() {
     if (movesX + movesO == BOARD_SIZE) {
-        return 1; // Todas las celdas están ocupadas, hay un empate.
+        return 1; 
     }
     return 0;
 }
 
-// Función para realizar un movimiento
 void makeMove(char player) {
     int i = rand() % BOARD_SIZE;
     while (board[i] != EMPTY) {
@@ -73,11 +65,8 @@ void playGame() {
     for (int i = 0; i < BOARD_SIZE; i++) {
         board[i] = EMPTY;
     }
-
     srand(time(NULL));
-
-    start_time = clock(); // Iniciar el reloj
-
+    start_time = clock(); 
     while (!gameOver) {
         makeMove(currentPlayer);
 
@@ -94,13 +83,10 @@ void playGame() {
             printBoard();
             gameOver = 1;
         }
-
         currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
     }
-
-    end_time = clock(); // Detener el reloj
+    end_time = clock(); 
     execution_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
-
     printf("Tiempo de ejecucion: %f segundos\n", execution_time);
 }
 

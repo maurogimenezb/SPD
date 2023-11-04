@@ -2,15 +2,14 @@
 #include <omp.h>
 #include <stdlib.h>
 #include <time.h>
-
 #define BOARD_SIZE 9
 #define EMPTY '-' 
 
 char board[BOARD_SIZE];
 char currentPlayer = 'X';
 int gameOver = 0;
-int movesX = 0; // Número de movimientos de X
-int movesO = 0; // Número de movimientos de O
+int movesX = 0; 
+int movesO = 0; 
 
 void initializeBoard() {
     for (int i = 0; i < BOARD_SIZE; i++) {
@@ -43,7 +42,7 @@ int checkWinner(char player) {
 
 int checkTie() {
     if (movesX + movesO == BOARD_SIZE) {
-        return 1; // Empate si todas las casillas están ocupadas.
+        return 1;
     }
     return 0;
 }
@@ -87,26 +86,20 @@ int main() {
     double start_time, end_time, execution_time;
     initializeBoard();
     srand(time(NULL));
-
     start_time = omp_get_wtime();
-
     #pragma omp parallel sections
     {
         #pragma omp section
         {
             playGame('X');
         }
-
         #pragma omp section
         {
             playGame('O');
         }
     }
-
     end_time = omp_get_wtime();
     execution_time = end_time - start_time;
-
     printf("Tiempo de ejecucion: %f segundos\n", execution_time);
-
     return 0;
 }
