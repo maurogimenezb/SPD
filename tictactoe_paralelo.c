@@ -4,7 +4,7 @@
 #include <time.h>
 
 #define BOARD_SIZE 9
-#define EMPTY '-'
+#define EMPTY '-' 
 
 char board[BOARD_SIZE];
 char currentPlayer = 'X';
